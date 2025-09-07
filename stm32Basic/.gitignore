@@ -1,0 +1,60 @@
+###############################
+# STM32 / Keil uVision .gitignore (SAFE)
+# Chỉ bỏ file build & session, GIỮ nguyên mã nguồn (.c/.h) và *.uvprojx
+###############################
+
+# Build output directories
+**/Objects/
+**/Listings/
+**/DebugConfig/
+
+# uVision user/session (tự sinh – có thể khác nhau giữa máy)
+*.uvoptx
+*.uvguix.*
+*.uvprojx.bak
+
+# (GIỮ *.uvprojx để người khác mở project)
+
+# RTE sinh ra theo cấu hình target – IGNORE phần `_Target_*` và `_*/` tạm
+**/RTE/_Target_*/
+**/RTE/_*/
+# (Nếu bạn muốn version control cấu hình RTE thì bỏ 2 dòng trên)
+
+# Build artifacts / intermediates
+*.axf
+*.hex
+*.bin
+*.map
+*.htm
+*.html
+*.o
+*.d
+*.dep
+*.lnp
+*.sct
+*.crf
+*.lst
+*.iex
+*.scvd
+*.bak
+
+# Dependency marker patterns
+*_Target*.dep
+*_hbv.dep
+*_dev.dep
+*_rgb.dep
+*_timer.dep
+*_adc.dep
+*_usart.dep
+*_i2c.dep
+*periph.dep
+
+# VS Code / editor / OS
+.vscode/
+*.code-workspace
+.DS_Store
+Thumbs.db
+
+# (Không ignore mã nguồn: *.c *.h, Drivers/, USER/, Src/, Resources/, etc.)
+
+# Nếu lỡ xóa source khỏi commit trước đó: chạy các bước phục hồi (ghi trong README hay hướng dẫn riêng)

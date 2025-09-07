@@ -1,0 +1,51 @@
+#############################################
+# Keil uVision / ARM MDK build artifacts
+#############################################
+*.uvguix.*
+*.uvoptx
+*.uvprojx.bak
+*.bak
+*.dep
+*.d
+*.o
+*.axf
+*.hex
+*.htm
+*.lnp
+*.map
+*.sct
+*.lst
+*.crf
+*.iex
+*.uvgui.*
+
+# Listings / Objects folders
+**/Objects/
+**/Listings/
+
+# RTE generated components (can be regenerated)
+**/RTE/_*
+
+# Backup folders (Proteus etc.)
+**/Project Backups/
+*.pdsbak
+
+# OS specific
+Thumbs.db
+Desktop.ini
+*.DS_Store
+
+# VSCode
+.vscode/
+
+# Build logs
+*.build_log.htm
+
+# Temporary
+~$*
+*.tmp
+
+# Ignore map/png outputs except documentation images
+!**/proteus/*.png
+
+# If you want to keep hex output for convenience, comment the pattern above ("*.hex")

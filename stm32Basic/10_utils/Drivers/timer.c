@@ -173,7 +173,7 @@ void TIMER_PWMLed(TIM_TypeDef *TIMx)
 		duty = 0;
 		step = -step;
 	}
-	TIM_SetCompare1(TIMx, (uint16_t)duty);
+	TIM_SetCompare4(TIMx, (uint16_t)duty);
 }
 
 void TIM2_IRQHandler(void)

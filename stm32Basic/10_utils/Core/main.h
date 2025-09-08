@@ -9,6 +9,7 @@ extern "C" {
 #include "delay.h"
 #include "gpio.h"
 #include "usart.h"
+#include "timer.h"
 
 #ifdef __cplusplus
 }

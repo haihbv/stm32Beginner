@@ -10,6 +10,7 @@ extern "C" {
 #include "gpio.h"
 #include "usart.h"
 #include "timer.h"
+#include "adc.h"
 
 #ifdef __cplusplus
 }

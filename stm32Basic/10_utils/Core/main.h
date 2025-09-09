@@ -11,6 +11,7 @@ extern "C" {
 #include "usart.h"
 #include "timer.h"
 #include "adc.h"
+#include "spi.h"
 
 #ifdef __cplusplus
 }

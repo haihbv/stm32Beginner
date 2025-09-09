@@ -56,6 +56,10 @@ static void ADCx_Init(ADC_TypeDef *ADCx, uint8_t Channel)
 		GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
 		GPIO_Init(GPIOB, &GPIO_InitStruct);
 	}
+	else
+	{
+		return;
+	}
 	
 	ADC_InitStruct.ADC_Mode = ADC_Mode_Independent;
 	ADC_InitStruct.ADC_ScanConvMode = DISABLE;

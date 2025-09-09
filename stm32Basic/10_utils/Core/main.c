@@ -5,15 +5,13 @@ int main(void)
 	SystemInit();
 	Delay_Init();
 	
-	USART_InitHandle(&UART1, USART1, 115200);
-	hADC1.Init(ADC_Channel_4);
-	hADC2.Init(ADC_Channel_3);
+	SPIx_Init(SPI1, SPI_BaudRatePrescaler_128, SPI_DataSize_8b);
 	
-	uint16_t adc1Value, adc2Value;
 	while (1)
 	{
-		adc1Value = hADC1.Read(ADC_Channel_4); adc2Value = hADC2.Read(ADC_Channel_3);
-		printf("ADC Value: %d %d\n", adc1Value, adc2Value);
+		SPI_CS_Low(GPIOC, GPIO_Pin_15);
+		SPI_TR_Data(SPI1, 0xA5);
+		SPI_CS_High(GPIOC, GPIO_Pin_15);
 		DelayMs(1000);
 	}
 }

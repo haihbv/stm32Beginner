@@ -1,5 +1,8 @@
 #include "adc.h"
 
+ADC_Driver_t hADC1;
+ADC_Driver_t hADC2;
+
 void ADC_Start(ADC_TypeDef *ADCx)
 {
 	ADC_Cmd(ADCx, ENABLE);
@@ -99,5 +102,13 @@ static uint16_t ADC2_Read(uint8_t Channel)
 	return ADC_GetConversionValue(ADC2);
 }
 
-ADC_Driver_t hADC1 = { ADC1_Init, ADC1_Read };
-ADC_Driver_t hADC2 = { ADC2_Init, ADC2_Read };
+void ADC_AutoInit(void) __attribute__((constructor));
+
+void ADC_AutoInit(void)
+{
+	hADC1.Init = ADC1_Init;
+	hADC1.Read = ADC1_Read;
+	
+	hADC2.Init = ADC2_Init;
+	hADC2.Read = ADC2_Read;
+}

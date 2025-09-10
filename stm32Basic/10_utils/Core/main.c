@@ -1,19 +1,23 @@
 #include "main.h"
 
-static uint8_t reg = 0x00;
-uint8_t val;
-
 int main(void)
 {
 	SystemInit();
 	Delay_Init();
 	
-	hI2C1.Init();
-
+	hUSART1.Init(115200);
+	printf("USART1 Echo Test\r\n");
 	while (1)
 	{
-		hI2C1.Master_Transmit(0x68, &reg, 1);
-		hI2C1.Master_Receive(0x68, &val, 1);
-		DelayMs(1000);
+		if (hUSART1.Available())
+		{
+			char c = hUSART1.GetChar();
+			USART_SendChar(USART1, c);
+			
+			if (c == '\r')
+			{
+				USART_SendChar(USART1, '\n');
+			}
+		}
 	}
 }

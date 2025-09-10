@@ -7,35 +7,33 @@ extern "C" {
 
 #include "stm32f10x.h"
 
-#define RX_BUFFER_SIZE 256
-
 typedef struct
 {
-	volatile char buffer[RX_BUFFER_SIZE];
-	volatile uint16_t head;
-	volatile uint16_t tail;
-} RingBuffer_t;
+	void (*Init)(uint32_t BaudRate);
+	void (*SendChar)(char c);
+	void (*SendStr)(const char *str);
+	int (*Available)(void);
+	char (*GetChar)(void);
+} USART_Driver_t;
 
-typedef struct USART_Handle USART_Handle_t;
+extern USART_Driver_t hUSART1;
+extern USART_Driver_t hUSART2;
+extern USART_Driver_t hUSART3;
 
-extern USART_Handle_t UART1;
-extern USART_Handle_t UART2;
+void USARTx_Init(USART_TypeDef *USARTx, uint32_t USART_BaudRate);
 
-struct USART_Handle
-{
-	USART_TypeDef *Instance;
-	RingBuffer_t rxBuffer;
-	
-	void (*sendByte)(USART_Handle_t *huart, uint8_t data);
-	void (*sendString)(USART_Handle_t *huart, const char *str);
-	int (*available)(USART_Handle_t *huart);
-	char (*getChar)(USART_Handle_t *huart);
-};
+/*****************************************************************
+* Transmit
+*****************************************************************/
+void USART_SendChar(USART_TypeDef *USARTx, char c);
+void USART_SendStr(USART_TypeDef *USARTx, const char *str);
 
-void USART_InitHandle(USART_Handle_t *huart, USART_TypeDef *USARTx, uint32_t baudrate);
-
+/*****************************************************************
+* Receive
+*****************************************************************/
 void USART1_IRQHandler(void);
 void USART2_IRQHandler(void);
+void USART3_IRQHandler(void);
 
 #ifdef __cplusplus
 }

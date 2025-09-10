@@ -1,23 +1,19 @@
 #include "main.h"
 
-uint8_t whoami;
+static uint8_t reg = 0x00;
+uint8_t val;
 
 int main(void)
 {
 	SystemInit();
 	Delay_Init();
 	
-	I2Cx_Init(I2C1, I2C_ClockSpeed_100kHz);
-	
+	hI2C1.Init();
+
 	while (1)
 	{
-		I2C_Start(I2C1);
-		I2C_WriteAddress(I2C1, 0x68 << 1, 0);
-		I2C_WriteData(I2C1, 0x00);
-		
-		I2C_Start(I2C1);
-		I2C_WriteAddress(I2C1, 0x68 << 1, 1);
-		whoami = I2C_ReadData(I2C1, 0);
-		I2C_Stop(I2C1);
+		hI2C1.Master_Transmit(0x68, &reg, 1);
+		hI2C1.Master_Receive(0x68, &val, 1);
+		DelayMs(1000);
 	}
 }

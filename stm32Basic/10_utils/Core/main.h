@@ -12,6 +12,7 @@ extern "C" {
 #include "timer.h"
 #include "adc.h"
 #include "spi.h"
+#include "i2c.h"
 
 #ifdef __cplusplus
 }

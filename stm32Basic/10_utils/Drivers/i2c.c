@@ -3,7 +3,7 @@
 I2C_Driver_t hI2C1;
 I2C_Driver_t hI2C2;
 
-void GPIO_I2C_Init(I2C_TypeDef *I2Cx)
+void I2Cx_Init(I2C_TypeDef *I2Cx)
 {
 	GPIO_InitTypeDef 	GPIO_InitStruct;
 	I2C_InitTypeDef		I2C_InitStruct;
@@ -128,12 +128,12 @@ static uint8_t I2C_Master_Receive(I2C_TypeDef *I2Cx, uint8_t DevAddress, uint8_t
 
 static inline void I2C1_Init(void)
 {
-	GPIO_I2C_Init(I2C1);
+	I2Cx_Init(I2C1);
 }
 
 static inline void I2C2_Init(void)
 {
-	GPIO_I2C_Init(I2C2);
+	I2Cx_Init(I2C2);
 }
 
 static inline void I2C1_Start(void)

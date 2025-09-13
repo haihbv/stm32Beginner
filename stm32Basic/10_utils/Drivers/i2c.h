@@ -20,7 +20,7 @@ typedef struct
 extern I2C_Driver_t hI2C1;
 extern I2C_Driver_t hI2C2;
 
-void GPIO_I2C_Init(I2C_TypeDef *I2Cx);
+void I2Cx_Init(I2C_TypeDef *I2Cx);
 void I2C_Start(I2C_TypeDef *I2Cx);
 void I2C_Stop(I2C_TypeDef *I2Cx);
 void I2C_WriteAddr(I2C_TypeDef *I2Cx, uint8_t address, uint8_t isRead);

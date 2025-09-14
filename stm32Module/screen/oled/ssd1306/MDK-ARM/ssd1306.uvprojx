@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\Drivers</IncludePath>
+              <IncludePath>..\Drivers;..\Core</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -388,6 +388,11 @@
               <FileType>1</FileType>
               <FilePath>..\Core\main.c</FilePath>
             </File>
+            <File>
+              <FileName>main.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\main.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -422,6 +427,16 @@
               <FileName>ssd1306.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\Drivers\ssd1306.h</FilePath>
+            </File>
+            <File>
+              <FileName>fonts.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Drivers\fonts.h</FilePath>
+            </File>
+            <File>
+              <FileName>fonts.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\fonts.c</FilePath>
             </File>
           </Files>
         </Group>

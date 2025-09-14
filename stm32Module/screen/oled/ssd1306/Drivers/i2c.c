@@ -29,6 +29,7 @@ void i2c_Init(I2C_TypeDef *I2Cx)
 		return;
 	}
 	
+	I2C_DeInit(I2Cx);
 	i2c.I2C_ClockSpeed = 100000;
 	i2c.I2C_Mode = I2C_Mode_I2C;
 	i2c.I2C_DutyCycle = I2C_DutyCycle_2;
@@ -68,16 +69,14 @@ void i2c_Data(I2C_TypeDef *I2Cx, uint8_t data)
 	I2C_SendData(I2Cx, data);
 	while (I2C_CheckEvent(I2Cx, I2C_EVENT_MASTER_BYTE_TRANSMITTED) == RESET);
 }
-void i2c_Master_Transmit(I2C_TypeDef *I2Cx, uint8_t addr, uint8_t *data)
+void i2c_Master_Transmit(I2C_TypeDef *I2Cx, uint8_t addr, uint8_t *data, uint16_t len)
 {
-	int i = 0;
 	i2c_Start(I2Cx);
-	i2c_Address(I2Cx, addr, 0);
+	i2c_Address(I2Cx, addr, 0); // write mode
 	
-	while (data[i])
+	for (uint16_t i = 0; i < len; i++)
 	{
 		i2c_Data(I2Cx, data[i]);
-		i++;
 	}
 	i2c_Stop(I2Cx);
 }

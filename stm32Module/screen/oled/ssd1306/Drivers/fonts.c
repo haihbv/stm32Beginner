@@ -894,10 +894,10 @@ static const uint8_t char_width[] = {
 #endif
 
 #ifdef INCLUDE_FONT_6x8
-const FontTypedef_t Font_6x8 = {6, 8, Font6x8};
+const FontTypedef_t Font_6x8 = {6, 8, Font6x8, 0};
 #endif
 #ifdef INCLUDE_FONT_7x10
-const FontTypedef_t Font_7x10 = {7, 10, Font7x10};
+const FontTypedef_t Font_7x10 = {7, 10, Font7x10, 0};
 #endif
 #ifdef INCLUDE_FONT_11x18
 const FontTypedef_t Font_11x18 = {11, 18, Font11x18, 0};

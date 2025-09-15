@@ -37,7 +37,7 @@ void ssd1306_Init(I2C_TypeDef* I2Cx)
 	
 	ssd1306_SendCommand(0xAE); // Display OFF
 	ssd1306_SendCommand(0x20); // Set Memory Addressing Mode
-  ssd1306_SendCommand(0x00); // Horizontal addressing mode
+  ssd1306_SendCommand(0x10); // Horizontal addressing mode
   ssd1306_SendCommand(0xB0); // Set Page Start Address
   ssd1306_SendCommand(0xC8); // COM Output Scan Direction remapped
   ssd1306_SendCommand(0x00); // Set low column address
@@ -74,6 +74,9 @@ void ssd1306_Init(I2C_TypeDef* I2Cx)
 	ssd1306_SendCommand(0x14); // Enable charge pump
 	
   ssd1306_SendCommand(0xAF); // Display ON
+	
+	ssd1306_Clear();
+	ssd1306_Refresh();
 }
 
 void ssd1306_Clear(void)
@@ -224,5 +227,43 @@ void ssd1306_DrawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, ssd1306_Co
 	}
 	return;
 }
-void ssd1306_FillRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, ssd1306_Color_t color);
-void ssd1306_DrawImage(uint8_t x, uint8_t y, const unsigned char* bitmap, uint8_t w, uint8_t h, ssd1306_Color_t color);
+void ssd1306_FillRectangle(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, ssd1306_Color_t color)
+{
+	uint8_t x, y;
+	uint8_t x_start = ((x1 <= x2) ? x1 : x2);
+	uint8_t x_end = ((x1 <= x2) ? x2 : x1);
+	uint8_t y_start = ((y1<=y2) ? y1 : y2);
+  uint8_t y_end   = ((y1<=y2) ? y2 : y1);
+	
+	for (y = y_start; (y <= y_end) && (y < MAX_ROW); y++)
+	{
+		for (x = x_start; (x <= x_end) && (x < MAX_COL); x++)
+		{
+			ssd1306_DrawPixel(x, y, color);
+		}
+	}
+}
+void ssd1306_DrawImage(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *bitmap)
+{
+	if (x >= MAX_COL || y >= MAX_ROW)
+	{
+		return;
+	}
+	
+	uint16_t byteWith = (w + 7) / 8;
+	for (uint8_t j = 0; j < h; j++)
+	{
+		for (uint8_t i = 0; i < w; i++)
+		{
+			uint8_t byte = bitmap[j * byteWith + i / 8];
+			if (byte & (0x80 >> (i % 8)))
+			{
+				ssd1306_DrawPixel(x + i, y + j, COLOR_WHITE);
+			}
+			else
+			{
+				ssd1306_DrawPixel(x + i, y + j, COLOR_BLACK);
+			}
+		}
+	}
+}

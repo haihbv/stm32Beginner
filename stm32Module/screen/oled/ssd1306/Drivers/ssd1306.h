@@ -53,8 +53,8 @@ uint8_t ssd1306_PutChar(char ch, FontTypedef_t Font, ssd1306_Color_t color);
 uint8_t ssd1306_PutString(char* str, FontTypedef_t Font, ssd1306_Color_t color);
 
 void ssd1306_DrawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, ssd1306_Color_t color);
-void ssd1306_FillRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, ssd1306_Color_t color);
-void ssd1306_DrawImage(uint8_t x, uint8_t y, const unsigned char* bitmap, uint8_t w, uint8_t h, ssd1306_Color_t color);
+void ssd1306_FillRectangle(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, ssd1306_Color_t color);
+void ssd1306_DrawImage(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *bitmap);
 
 #ifdef SUPPORT_VIE
 uint8_t ssd1306_PutCharVIE(char* ch, FontTypedef_t Font, ssd1306_Color_t color);

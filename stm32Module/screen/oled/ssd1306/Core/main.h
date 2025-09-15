@@ -5,7 +5,7 @@
 #include "ssd1306.h"
 #include "delay.h"
 #include "i2c.h"
-#include "main.h"
+#include "image.h"
 #include <string.h>
 
 #endif // __MAIN__

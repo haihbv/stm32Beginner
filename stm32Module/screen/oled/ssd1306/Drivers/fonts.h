@@ -11,6 +11,8 @@ typedef struct
   const uint8_t *const char_width;
 } __attribute__((packed)) FontTypedef_t;
 
+#define INCLUDE_FONT_6x8
+#define INCLUDE_FONT_7x10
 #define INCLUDE_FONT_11x18
 #define INCLUDE_FONT_16x15
 #define SUPPORT_VIE

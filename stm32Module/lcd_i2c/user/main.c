@@ -7,7 +7,7 @@ int main(void)
 {
 	SystemInit();
 	Delay_Init();
-	LCD_I2C_Init(I2C1);
+	 (I2C1);
 	LCD_I2C_Clear();
 	
 	LCD_I2C_Goto(0, 0);

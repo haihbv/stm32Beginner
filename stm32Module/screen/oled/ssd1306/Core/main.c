@@ -1,24 +1,26 @@
 #include "main.h"
+#include "test_ssd1306.h"
 
 int main(void)
 {
 	ssd1306_Init(I2C2);
-
-	ssd1306_Clear();
-	ssd1306_Refresh();
-
+	
+	test_DisplayOnOff();
+	
+	test_FillBuffer();
+	
+	test_DrawPixel();
+	
+	test_PutCharAndString();
+	
+	test_DrawLine();
+	
+	test_FillRectangle();
+	
+	test_DrawBitMap();
+	
+	// test_Contrast();
 	while (1)
 	{
-		ssd1306_DrawBitMap(0, 12, 19, 39, walkmen_0_19x39);
-		ssd1306_Refresh();
-
-		ssd1306_DrawBitMap(0, 12, 19, 39, walkmen_1_19x39);
-		ssd1306_Refresh();
-
-		ssd1306_DrawBitMap(0, 12, 19, 39, walkmen_2_19x39);
-		ssd1306_Refresh();
-
-		ssd1306_DrawBitMap(0, 12, 19, 39, walkmen_3_19x39);
-		ssd1306_Refresh();
 	}
 }

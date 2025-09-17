@@ -443,6 +443,16 @@
               <FileType>5</FileType>
               <FilePath>..\Drivers\image.h</FilePath>
             </File>
+            <File>
+              <FileName>test_ssd1306.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\test_ssd1306.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_ssd1306.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Drivers\test_ssd1306.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

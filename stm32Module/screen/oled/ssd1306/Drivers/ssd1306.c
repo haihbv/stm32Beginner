@@ -142,47 +142,22 @@ void ssd1306_SetCursor(uint8_t x, uint8_t y)
 uint8_t ssd1306_PutChar(char ch, FontTypedef_t Font, ssd1306_Color_t color)
 {
 	uint8_t i, j;
-	uint16_t line;
-
-	if (ch < 32 || ch > 126)
-		return 0;
-
-	// Nếu không đủ chỗ vẽ ký tự, tự xuống dòng nếu được bật
-	if (SSD1306.currentX + Font.width >= MAX_COL)
-	{
-		if (SSD1306.autoNewLine == ENABLE)
-		{
-			SSD1306.currentX = 0;
-			SSD1306.currentY += Font.height;
-		}
-		else
-		{
-			return 0;
-		}
-	}
-
-	// Nếu quá chiều cao, dừng in
-	if (SSD1306.currentY + Font.height > MAX_ROW)
-	{
-		return 0;
-	}
-
+	uint32_t block;
 	for (i = 0; i < Font.height; i++)
 	{
-		line = Font.data[(ch - 32) * Font.height + i];
+		block = Font.data[(ch - 32) * Font.height + i];
 		for (j = 0; j < Font.width; j++)
 		{
-			if ((line >> (Font.width - 1 - j)) & 0x01)
+			if ((block << j) & 0x8000)
 			{
 				ssd1306_DrawPixel(SSD1306.currentX + j, SSD1306.currentY + i, color);
 			}
 			else
 			{
-				ssd1306_DrawPixel(SSD1306.currentX + j, SSD1306.currentY + i, COLOR_BLACK);
+				ssd1306_DrawPixel(SSD1306.currentX + j, SSD1306.currentY + i, !color);
 			}
 		}
 	}
-
 	SSD1306.currentX += Font.width;
 	return ch;
 }
@@ -191,7 +166,7 @@ uint8_t ssd1306_PutString(char *str, FontTypedef_t Font, ssd1306_Color_t color)
 {
 	while (*str)
 	{
-		if (ssd1306_PutChar(*str, Font, color) == 0)
+		if (ssd1306_PutChar(*str, Font, color) != *str)
 		{
 			return *str;
 		}

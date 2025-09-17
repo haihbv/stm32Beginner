@@ -97,11 +97,18 @@ void test_FillBuffer(void)
 void test_All(void)
 {
     test_DisplayOnOff();
+		DelayMs(200);
     test_FillBuffer();
+		DelayMs(200);
     test_DrawPixel();
+		DelayMs(200);
     test_PutCharAndString();
+		DelayMs(200);
     test_DrawLine();
+		DelayMs(200);
     test_FillRectangle();
+		DelayMs(200);
     test_DrawBitMap();
-    test_Contrast();
+		DelayMs(200);
+    // test_Contrast();
 }

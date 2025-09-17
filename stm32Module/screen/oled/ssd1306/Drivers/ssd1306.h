@@ -56,10 +56,4 @@ void ssd1306_FillRectangle(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, ssd13
 void ssd1306_DrawImage(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *bitmap);
 void ssd1306_DrawBitMap(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *bitmap);
 
-#ifdef SUPPORT_VIE
-uint8_t ssd1306_PutCharVIE(char *ch, FontTypedef_t Font, ssd1306_Color_t color);
-char ssd1306_PutStringVIE(char *str, FontTypedef_t Font, ssd1306_Color_t color);
-
-#endif /* SUPPORT_VIE */
-
 #endif /* __OLED__ */

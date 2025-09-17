@@ -81,10 +81,7 @@ void ssd1306_Init(I2C_TypeDef *I2Cx)
 
 void ssd1306_Clear(void)
 {
-	for (uint16_t i = 0; i < sizeof(SSD1306_Buffer); i++)
-	{
-		SSD1306_Buffer[i] = 0x00;
-	}
+	memset(SSD1306_Buffer, 0x00, sizeof(SSD1306_Buffer));
 }
 
 void ssd1306_DisplayOn(void)
@@ -145,20 +142,43 @@ void ssd1306_SetCursor(uint8_t x, uint8_t y)
 uint8_t ssd1306_PutChar(char ch, FontTypedef_t Font, ssd1306_Color_t color)
 {
 	uint8_t i, j;
-	uint32_t block;
+	uint16_t line;
+
+	if (ch < 32 || ch > 126)
+		return 0;
+
+	// Nếu không đủ chỗ vẽ ký tự, tự xuống dòng nếu được bật
+	if (SSD1306.currentX + Font.width >= MAX_COL)
+	{
+		if (SSD1306.autoNewLine == ENABLE)
+		{
+			SSD1306.currentX = 0;
+			SSD1306.currentY += Font.height;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+
+	// Nếu quá chiều cao, dừng in
+	if (SSD1306.currentY + Font.height > MAX_ROW)
+	{
+		return 0;
+	}
 
 	for (i = 0; i < Font.height; i++)
 	{
-		block = Font.data[(ch - 32) * Font.height + i];
+		line = Font.data[(ch - 32) * Font.height + i];
 		for (j = 0; j < Font.width; j++)
 		{
-			if ((block << j) & 0x8000)
+			if ((line >> (Font.width - 1 - j)) & 0x01)
 			{
 				ssd1306_DrawPixel(SSD1306.currentX + j, SSD1306.currentY + i, color);
 			}
 			else
 			{
-				ssd1306_DrawPixel(SSD1306.currentX + j, SSD1306.currentY + i, !color);
+				ssd1306_DrawPixel(SSD1306.currentX + j, SSD1306.currentY + i, COLOR_BLACK);
 			}
 		}
 	}
@@ -171,9 +191,9 @@ uint8_t ssd1306_PutString(char *str, FontTypedef_t Font, ssd1306_Color_t color)
 {
 	while (*str)
 	{
-		if (ssd1306_PutChar(*str, Font, color) != *str)
+		if (ssd1306_PutChar(*str, Font, color) == 0)
 		{
-			return *str; // error
+			return *str;
 		}
 		str++;
 	}
@@ -182,10 +202,7 @@ uint8_t ssd1306_PutString(char *str, FontTypedef_t Font, ssd1306_Color_t color)
 
 void ssd1306_FillBuffer(uint8_t data)
 {
-	for (uint16_t i = 0; i < MAX_COL * MAX_PAGE; i++)
-	{
-		SSD1306_Buffer[i] = data;
-	}
+	memset(SSD1306_Buffer, data, sizeof(SSD1306_Buffer));
 }
 
 void ssd1306_SetPixel(uint8_t x, uint8_t y)
@@ -250,12 +267,12 @@ void ssd1306_DrawImage(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t
 		return;
 	}
 
-	uint16_t byteWith = (w + 7) / 8;
+	uint16_t byteWidth = (w + 7) / 8;
 	for (uint8_t j = 0; j < h; j++)
 	{
 		for (uint8_t i = 0; i < w; i++)
 		{
-			uint8_t byte = bitmap[j * byteWith + i / 8];
+			uint8_t byte = bitmap[j * byteWidth + i / 8];
 			if (byte & (0x80 >> (i % 8)))
 			{
 				ssd1306_DrawPixel(x + i, y + j, COLOR_WHITE);
@@ -275,8 +292,8 @@ void ssd1306_DrawBitMap(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_
 		return;
 	}
 
-	uint16_t byteWidth = w;			   
-	uint16_t byteHeight = (h + 7) / 8; 
+	uint16_t byteWidth = w;
+	uint16_t byteHeight = (h + 7) / 8;
 
 	for (uint16_t j = 0; j < byteHeight; j++)
 	{
